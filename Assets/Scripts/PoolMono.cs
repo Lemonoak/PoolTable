@@ -17,6 +17,8 @@ public class PoolMono : MonoBehaviour
 
     [SerializeField] GameObject Sphere = null;
 
+    [SerializeField] float velocityvalue = 2.0f;
+
     //Only fires once when you put script on object, recompile or change something in the inspector
     private void OnValidate() {}
 
@@ -35,33 +37,22 @@ public class PoolMono : MonoBehaviour
         //PlaneDetector spherePlaneDetector = Sphere.AddComponent<PlaneDetector>();
         //spherePlaneDetector.Plane = MyPlane;
 
-        Sphere.GetComponent<Rigidbody>().velocity = new Vector3(2.0f, 0.0f, 2.0f);
+        //Sphere.GetComponent<Rigidbody>().velocity = new Vector3(-2.0f, 0.0f, 0.0f);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Sphere.GetComponent<Rigidbody>().velocity = new Vector3(-velocityvalue, 0.0f, 0.0f);
+        }
     }
 
     private void FixedUpdate()
     {
-        ReflectSphere();
     }
 
-    void ReflectSphere()
-    {
-        RaycastHit hit;
 
-        Rigidbody rb = Sphere.GetComponent<Rigidbody>();
-        Vector3 velocity = rb.velocity;
-
-        float halfScale = Sphere.transform.localScale.x * 0.5f;
-
-        if (Physics.Raycast(Sphere.transform.position, velocity.normalized, out hit, halfScale))
-        {
-            if (hit.transform.tag == "Reflective")
-            {
-                Sphere.transform.position = hit.point + hit.normal * halfScale;
-
-                rb.velocity = MyPlane.Reflect(velocity, hit.normal);
-            }
-        }
-    }
 
     /*private void OnDrawGizmos()
     {
