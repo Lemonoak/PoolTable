@@ -7,7 +7,6 @@ public class Ball : MonoBehaviour
     [SerializeField]
     GameObject Sphere = null;
     Rigidbody RB;
-    bool IsColliding = false;
 
     [SerializeField] float Drag = 1.0f;
     private void Start()
@@ -23,6 +22,7 @@ public class Ball : MonoBehaviour
         DragOnSphere();
     }
 
+    //THIS IS THE FUNCTION WE CREATED TOGETHER DURING CLASS
     //WHEN A BALL HITS A WALL
     //ALSO THE ELASTIC (ENERGY CONSERVED)
     void ReflectSphereOnWall()
@@ -79,6 +79,7 @@ public class Ball : MonoBehaviour
     //ALSO THE DISSIPATIVE (PARTIAL ENERGY LOSS)
     void DragOnSphere()
     {
+        //Tried to use other calculations but the current solution work best and easiest
         //float dragForceMagnitude = (RB.velocity.magnitude * RB.velocity.magnitude) * Drag;
 
         RB.velocity = RB.velocity * (1.0f - Time.deltaTime * Drag);
